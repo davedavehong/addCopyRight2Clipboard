@@ -2,7 +2,7 @@
  * Created by dave on 3月4 004.
  */
 var localUrl = window.location.href;
-function setClipboardText(event,nodeClip) {
+function setClipboardText(event, nodeClip) {
     event.preventDefault();
     var htmlData = '商业转载请联系作者获得授权，非商业转载请注明出处。<br />'
         + '作者：dave<br />链接：<a href="http://' + localUrl + '">' + localUrl + '</a><br />'
@@ -43,11 +43,33 @@ pageA.addEventListener('copy', function (e) {
     var nodeClip = document.createElement('div');
     nodeClip.appendChild(window.getSelection().getRangeAt(0).cloneContents());
     if (nodeClip.innerText.length > 24) {
-        setClipboardText(e,nodeClip);
+        setClipboardText(e, nodeClip);
     }
 });
 
 var pageB = document.getElementById('pageB');
 pageB.addEventListener('copy', function (e) {
     showCopyRightMsg(e)
+});
+
+var stopSign = document.getElementById('stopSign');
+var stopSignHidden;
+
+document.getElementById('pageC').addEventListener('mouseup', function (e) {
+    setTimeout(function () {
+        var nodeClip = document.createElement('div');
+        nodeClip.appendChild(window.getSelection().getRangeAt(0).cloneContents());
+        console.log(nodeClip.innerText.length);
+        if (nodeClip.innerText.length) {
+            if (stopSignHidden) {
+                clearTimeout(stopSignHidden);
+            }
+            stopSign.style.visibility = 'visible';
+            stopSign.style.left = e.pageX + 20 + 'px';
+            stopSign.style.top = e.pageY + 'px';
+            stopSignHidden = setTimeout(function () {
+                stopSign.style.visibility = 'hidden';
+            }, 2000)
+        }
+    },100)
 });

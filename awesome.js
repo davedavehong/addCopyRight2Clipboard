@@ -70,6 +70,9 @@ document.getElementById('pageC').addEventListener('mouseup', function (e) {
             stopSignHidden = setTimeout(function () {
                 stopSign.style.visibility = 'hidden';
             }, 2000)
+        }else{
+            clearTimeout(stopSignHidden);
+            stopSign.style.visibility = 'hidden';
         }
     },100)
 });
